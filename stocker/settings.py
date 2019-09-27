@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+# import smtplib 
+# from django.core.mail import send_mail
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -121,3 +123,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+SENDGRID_API_KEY = os.getenv('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')
+EMAIL_BACKEND = 'sgbackend.SendGridBackend'
+SENDGRID_API_KEY = "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"
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 465
+EMAIL_USE_TLS = True

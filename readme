@@ -1,0 +1,3 @@
+Must install sendgrid django package using the command:
+
+pip install sendgrid-django
