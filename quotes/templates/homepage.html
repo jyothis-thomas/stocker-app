@@ -1,0 +1,25 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+
+{% if ticker %}
+    {{ ticker }}
+{% endif %}
+
+{% if api %}
+    {% if api == "Error.. Make sure you have entered a correct ticker" %}
+        An error has occured try again. Make sure you have entered a valid ticker symbol
+    {% else %}
+        <h1>{{api.companyName}}</h1><br/>
+        Price:{{ api.latestPrice }}<br/>
+        Previous Close:{{ api.previousClose }}<br/>
+        Market Cap:{{ api.marketCap }}<br/>
+        YTD Change:{{ api.ytdChange }}<br/>
+        52 week High:{{ api.week52High }}<br/>
+        52 week Low:{{ api.week52Low }}<br/>
+
+    {% endif %}
+{% endif %}
+
+{% endblock content %}
+

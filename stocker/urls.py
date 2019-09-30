@@ -24,7 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    
+    path('home/', include('quotes.urls')),
+
+    #Password reset magic happens here
     path(
         'change-password/',
         auth_views.PasswordChangeView.as_view(

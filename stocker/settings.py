@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
+    'quotes',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'stocker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['stocker/templates'],
+        'DIRS': ['stocker/templates','quotes/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,9 +125,9 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-SENDGRID_API_KEY = os.getenv('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')
+SENDGRID_API_KEY = os.getenv('Send_grid_api_from_login')
 EMAIL_BACKEND = 'sgbackend.SendGridBackend'
-SENDGRID_API_KEY = "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"
+SENDGRID_API_KEY = "Send_grid_api_from_login"
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY

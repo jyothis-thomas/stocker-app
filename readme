@@ -1,3 +1,5 @@
-Must install sendgrid django package using the command:
+Must install sendgrid django and requests package using the command:
 
-pip install sendgrid-django
+pip3 install sendgrid-django
+
+pip3 install requests
