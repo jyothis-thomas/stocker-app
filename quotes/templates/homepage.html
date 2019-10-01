@@ -2,6 +2,9 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+{% endif %}
 {% if ticker %}
     {{ ticker }}
 {% endif %}
@@ -22,4 +25,3 @@
 {% endif %}
 
 {% endblock content %}
-

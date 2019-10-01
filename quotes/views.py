@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from . models import Stock
 from . forms import StockForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.db import transaction
 
-#api key= pk_10c8988d72794440b4f9bba3e0cde284
-
+@login_required
 def home(request):
     import requests
     import json
@@ -28,10 +30,16 @@ def add_stock(request):
     import json
 
     if request.method == 'POST':
-        form = StockForm(request.POST or None)
+        stock_form = StockForm(request.POST or None)
 
-        if form.is_valid():
-            form.save()
+        if stock_form.is_valid():
+            # stock_form.user=request.user.username
+            current_user = request.user 
+            print(current_user)
+            obj = User.objects.get(username=current_user)
+            stock_form.user=obj
+            stock_form.save()
+            transaction.commit
             messages.success(request, ("Stock has been added sucessfully"))
             return redirect('add_stock')
         else:
@@ -60,3 +68,30 @@ def delete(request, stock_id):
 def delete_stock(request):
     ticker = Stock.objects.all()
     return render(request, 'delete_stock.html', {'ticker': ticker})
+
+def news(request):
+    import requests
+    import json
+    main_url = " https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4dbc17e007ab436fb66416009dfb59a8"
+    open_bbc_page = requests.get(main_url).json() 
+    newsdata=[]
+    linkdata=[]
+    # getting all articles in a string article 
+    for i in range(20):
+        article = {
+                    'a': open_bbc_page["articles"][i]['title']
+                    
+                    }
+        newsdata.append(article)
+        # links = {
+        #         'b': open_bbc_page["articles"][i]['url']
+        # }
+        linkdata.append(article)
+    context={'newsdata': newsdata}
+    # url_link={'linkdata': linkdata}
+    # empty list which will  
+    # contain all trending news 
+    # results = [] 
+    # for ar in article: 
+    #     results.append(ar["title"]) 
+    return render(request, 'news.html', context)

@@ -122,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home1'
 LOGOUT_REDIRECT_URL = 'home'
 
 SENDGRID_API_KEY = os.getenv('Send_grid_api_from_login')
