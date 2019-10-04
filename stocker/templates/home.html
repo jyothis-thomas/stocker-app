@@ -6,6 +6,8 @@
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
   <p><a href="{% url 'logout' %}">logout</a></p>
+  <br/>
+  Or go to <p><a href="/home/">homepage</a></p>
   <button><a style="text-decoration: none;color:black" href="change-password/">Change Password</a></button>
 {% else %}
   <p>You are not logged in</p>

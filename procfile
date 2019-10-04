@@ -1,0 +1,1 @@
+web: gunicorn stocker-application.wsgi --log-file -

@@ -36,37 +36,37 @@ def add_stock(request):
         stock_form = StockForm(request.POST or None)
 
         if stock_form.is_valid():
-            # stock_form.user=request.user.username
-            current_user = request.user 
-            print(current_user)
-            # obj = User.objects.get(username=current_user)
-            # stock_form.user=obj
+            ticker = request.POST['ticker']
 
-            stock = stock_form.save(commit=False)
-            stock.user = current_user
-            stock.save()
+            api_requests = requests.get("https://cloud.iexapis.com/stable/stock/" + ticker + "/quote?token=pk_10c8988d72794440b4f9bba3e0cde284")
+            try:
+                api = json.loads(api_requests.content)
+            except Exception as e:
+                messages.success(request, ("Invalid entry!! Please check the ticker symbol"))
+                return redirect('add_stock')
 
-            # stock_form.save()
-            # transaction.commit
-            messages.success(request, ("Stock has been added sucessfully, if not please check"))
+            try:  
+                current_user = request.user 
+                stock = stock_form.save(commit=False)
+                stock.user = current_user
+                stock.save()
+            except Exception as e:
+                messages.success(request, ("Please enter a unique ticker"))
+                return redirect('add_stock')
+            messages.success(request, ("Stock has been added sucessfully, if not please check the input"))
             return redirect('add_stock')
         else:
             return redirect('add_stock')
     else:
-        # ticker = Stock.objects.all()
-        print("finished ticker")
         ticker = Stock.objects.filter(user=request.user)
         output = []
-
         for ticker_item in ticker:
-
             api_requests = requests.get("https://cloud.iexapis.com/stable/stock/" + str(ticker_item) + "/quote?token=pk_10c8988d72794440b4f9bba3e0cde284")
             try:
                 api = json.loads(api_requests.content)
                 output.append(api)
             except Exception as e:
                 api = "Error.. Make sure you have entered a correct ticker"
-            
         return render(request, 'add_stock.html', {'ticker':ticker, 'output':output})
 
 def delete(request, stock_id):
@@ -76,7 +76,7 @@ def delete(request, stock_id):
     return redirect(delete_stock)
     
 def delete_stock(request):
-    ticker = Stock.objects.all()
+    ticker = Stock.objects.filter(user=request.user)
     return render(request, 'delete_stock.html', {'ticker': ticker})
 
 def news(request):
@@ -94,3 +94,9 @@ def news(request):
         newsdata.append(article)
     context={'newsdata': newsdata} 
     return render(request, 'news.html', context)
+
+# def handler500(request, *args, **argv):
+#     response = render_to_response('add_stock.html', {},
+#                                   context_instance=RequestContext(request))
+#     response.status_code = 500
+#     return response

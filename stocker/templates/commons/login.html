@@ -4,15 +4,17 @@
 
 {% block content %} 
     <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-        <br><br>
-        <a href="{% url 'password_reset' %}">Forgot Password</a>
-        <br><br>
-        <a href="{% url 'signup' %}">Sign Up</a>
-        <br><br>
-        <a href="{% url 'home' %}">Home</a>
-    </form>
+    <div style="text-align: center">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+            <br><br>
+            <a href="{% url 'password_reset' %}">Forgot Password</a>
+            <br><br>
+            <a href="{% url 'signup' %}">Sign Up</a>
+            <br><br>
+            <a href="{% url 'home' %}">Home</a>
+        </form>
+    </div>
 {% endblock content %}

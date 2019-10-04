@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vn!br$o4n8v$n3ruo($+hru9fl0!dhph91id_1#n+u9inytx!h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -127,16 +127,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = 'home1'
 LOGOUT_REDIRECT_URL = 'home'
 
-SENDGRID_API_KEY = os.getenv('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')
+SENDGRID_API_KEY = os.getenv('Sendgrid_api_key') #apikey
 EMAIL_BACKEND = 'sgbackend.SendGridBackend'
-SENDGRID_API_KEY = "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"
+SENDGRID_API_KEY = "Sendgrid_api_key" #apikey
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_USER = 'apikey' #apikey name
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 465
 EMAIL_USE_TLS = True
