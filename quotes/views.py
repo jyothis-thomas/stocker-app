@@ -25,6 +25,9 @@ def home(request):
 def about(request):
     return render(request, 'about.html', {})
 
+def profile(request):
+    return render(request, 'profile.html', {})
+
 def add_stock(request):
     import requests
     import json
@@ -36,16 +39,23 @@ def add_stock(request):
             # stock_form.user=request.user.username
             current_user = request.user 
             print(current_user)
-            obj = User.objects.get(username=current_user)
-            stock_form.user=obj
-            stock_form.save()
-            transaction.commit
-            messages.success(request, ("Stock has been added sucessfully"))
+            # obj = User.objects.get(username=current_user)
+            # stock_form.user=obj
+
+            stock = stock_form.save(commit=False)
+            stock.user = current_user
+            stock.save()
+
+            # stock_form.save()
+            # transaction.commit
+            messages.success(request, ("Stock has been added sucessfully, if not please check"))
             return redirect('add_stock')
         else:
             return redirect('add_stock')
     else:
-        ticker = Stock.objects.all()
+        # ticker = Stock.objects.all()
+        print("finished ticker")
+        ticker = Stock.objects.filter(user=request.user)
         output = []
 
         for ticker_item in ticker:
@@ -76,22 +86,11 @@ def news(request):
     open_bbc_page = requests.get(main_url).json() 
     newsdata=[]
     linkdata=[]
-    # getting all articles in a string article 
     for i in range(20):
         article = {
-                    'a': open_bbc_page["articles"][i]['title']
-                    
+                    'a': open_bbc_page["articles"][i]['title'],
+                    'url': open_bbc_page['articles'][i]['url']
                     }
         newsdata.append(article)
-        # links = {
-        #         'b': open_bbc_page["articles"][i]['url']
-        # }
-        linkdata.append(article)
-    context={'newsdata': newsdata}
-    # url_link={'linkdata': linkdata}
-    # empty list which will  
-    # contain all trending news 
-    # results = [] 
-    # for ar in article: 
-    #     results.append(ar["title"]) 
+    context={'newsdata': newsdata} 
     return render(request, 'news.html', context)

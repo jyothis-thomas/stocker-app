@@ -1,18 +1,17 @@
 {% extends 'base2.html' %}
-
+{% load static %}
 {% block content %}
+<script type="text/javascript" src="{% static 'button.js' %}"></script>
 
 <h1>Add stock </h1>
 <br/>
-<form action="{% url 'add_stock' %}" class="form-inline my-2 my-lg-0" method="POST">
-                        
+<form action="{% url 'add_stock' %}" class="form-inline my-2 my-lg-0" method="POST">                       
     <input class="form-control mr-sm-2" type="search" placeholder="Add to portfolio" aria-label="Search" name="ticker">
-    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Add Stock</button>
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" onclick="clickAndDisable(this);" >Add Stock</button>
     {% csrf_token %}
   </form>
 <br/>
 <br/>
-
 <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
           <tr>
@@ -27,9 +26,6 @@
         </thead>
         <tbody>
             {% if ticker %}
-                
-
-                
                     {% for list_item in output %}
                         <tr>
                             <th scope="row">{{ list_item.companyName }}</th> 
@@ -40,10 +36,7 @@
                             <td>${{ list_item.week52High }}</td>
                             <td>${{ list_item.week52Low }}</td>
                         </tr>
-                    {% endfor%}
-                    
-                
-               
+                    {% endfor%}             
             {% endif %}
         </tbody>
       </table>

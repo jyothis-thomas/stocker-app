@@ -5,6 +5,6 @@
 <h1>NEWS which may change your world</h1>
 
 {% for article in newsdata %}
-     <a>{{article.a}}</a> <br/> 
+     <a href="{{article.url}}">{{article.a}}</a> <br/> 
 {% endfor %}
 {% endblock content %}

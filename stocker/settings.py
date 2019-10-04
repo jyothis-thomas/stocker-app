@@ -45,6 +45,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -122,12 +125,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 LOGIN_REDIRECT_URL = 'home1'
 LOGOUT_REDIRECT_URL = 'home'
 
-SENDGRID_API_KEY = os.getenv('Send_grid_api_from_login')
+SENDGRID_API_KEY = os.getenv('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')
 EMAIL_BACKEND = 'sgbackend.SendGridBackend'
-SENDGRID_API_KEY = "Send_grid_api_from_login"
+SENDGRID_API_KEY = "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"
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
